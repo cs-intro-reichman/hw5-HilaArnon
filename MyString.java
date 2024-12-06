@@ -19,7 +19,7 @@ public class MyString {
         System.out.println(randomStringOfLetters(10));
         System.out.println(randomStringOfLetters(5));
 
-        System.out.println(remove("meet","committee"));   //comit
+        System.out.println(remove("committee","meet"));   //comit
     }
 
     /**
@@ -154,8 +154,8 @@ public class MyString {
      * @param str2 - a string
      * @return a string consisting of str1 minus all the characters of str2
      */
-    public static String remove(String str1, String str2) {
-        //kinda: str2 - str1
+    public static String remove(String str2, String str1) {
+        //kinda: str1 - str2
         for(int i = 0; i < str1.length(); i ++){
             char str1Char = str1.charAt(i);
             for(int j = 0; j < str2.length(); j ++){
