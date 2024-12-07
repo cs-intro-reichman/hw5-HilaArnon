@@ -194,7 +194,7 @@ public class MyString {
      * @return a string consisting of str1 minus all the characters of str2
      */
     public static String remove(String str2, String str1) {
-        //kinda: str1 - str2
+        //kinda: str2 - str1
         for(int i = 0; i < str1.length(); i ++){
             char str1Char = str1.charAt(i);
             for(int j = 0; j < str2.length(); j ++){
