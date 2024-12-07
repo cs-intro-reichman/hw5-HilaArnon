@@ -147,7 +147,7 @@ public class Scrabble {
 	// 2. The user gets the Scrabble points of the entered word.
 	// 3. The user is prompted to enter another word, or '.' to end the hand.
 	public static void playHand(String hand) {
-		init();
+		//init();
 		int score = 0;
 		boolean wantToPlay = true;
 		In in = new In();
