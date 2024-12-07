@@ -156,75 +156,53 @@ public class Scrabble {
 			System.out.println("Current Hand: " + MyString.spacedString(hand));
 			System.out.println("Enter a word, or '.' to finish playing this hand:");
 			String input = in.readString();
-
-			if (input.equals(".")) {
+		
+			if (input.equals(".")) {                //want to play?
 				wantToPlay = false;
-				break;
 			}
-	
-			if (!subsetOf(input, hand)) {
+		
+			if (wantToPlay && subsetOf(input, hand)) {
+				if (isWordInDictionary(input)) {                 //in Dictionary?
+					int newScore = wordScore(input);
+					score += newScore;
+					System.out.println(input + " earned " + newScore + " points. Score: " + score + " points");
+					System.out.println();
+					hand = MyString.remove(hand, input);
+				} else {
+					System.out.println("No such word in the dictionary. Try again.");
+				}
+			} else if (wantToPlay) {                //input isnt sub of hand
 				System.out.println("Invalid word. Try again.");
-				continue;  
 			}
-	
-			if (!isWordInDictionary(input)) {
-				System.out.println("No such word in the dictionary. Try again.");
-				continue; 
-			}
-	
-			int newScore = wordScore(input);
-			score += newScore;
-			System.out.println(input + " earned " + newScore + " points. Score: " + score + " points");
-			System.out.println();
-
-			hand = MyString.remove(hand, input);
 		}
-	
+	 
 		if (hand.length() == 0) {
 			System.out.println("Ran out of letters. Total score: " + score + " points");
 		} else {
 			System.out.println("End of hand. Total score: " + score + " points");
 		}
-	}
+	 }
 
 	// Plays a Scrabble game. Prompts the user to enter 'n' for playing a new hand,
 	// or 'e'
 	// to end the game. If the user enters any other input, writes an error message.
 	public static void playGame() {
 		init();
-		// Initializes the dictionary
-		// The variable in is set to represent the stream of characters
-		// coming from the keyboard. Used for getting the user's inputs.
 		In in = new In();
-		boolean inputIsE = false;
-
-		while (!inputIsE) {
+		boolean gameEnded = false;
+	
+		while (!gameEnded) {
 			System.out.println("Enter n to deal a new hand, or e to end the game:");
-			// Gets the user's input, which is all the characters entered by
-			// the user until the user enter the ENTER character.
-			//// Replace the following break statement with code
-			//// that completes the game playing loop
-
 			String input = in.readString();
-			boolean firstInput = true, inputIsN = false;
-			while (!inputIsN && !inputIsE) {
-				if (!firstInput) {
-					input = in.readString();
-				} else {
-					firstInput = false;
-				}
-
-				if (input.equals("e")) {
-					inputIsE = true;
-				} else if (input.equals("n")) {
-					inputIsN = true;
-				}
-			}
-
-			if (inputIsN) {
+	
+			if (input.equals("e")) {
+				gameEnded = true;
+			} else if (input.equals("n")) {
 				playHand(createHand());
+			} else {
+				// Handle invalid input if needed
+				System.out.println("Invalid input. Please enter 'n' or 'e'.");
 			}
-
 		}
 	}
 
