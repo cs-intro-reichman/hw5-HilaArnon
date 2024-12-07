@@ -191,17 +191,8 @@ public class Scrabble {
                     System.out.println("Invalid word. Try again.");         //not a sub-word...
                 }
             }
-
-            //cheaking in the DICTIONARY
-            boolean inDICTIONARY = false;
-            for(int i = 0; i < DICTIONARY.length; i ++){
-                if(input.equals(DICTIONARY[i])){
-                    inDICTIONARY = true;
-                    break;
-                }
-            }
             
-            if(inDICTIONARY){                                              //not in the DICTIONARY 
+            if(!isWordInDictionary(input)){                            //not in the DICTIONARY 
                 System.out.println("No such word in the dictionary. Try again.");
             } else if (wantToPlay){
                 int newScore = wordScore(input);                            //initial score
