@@ -106,6 +106,28 @@ public class Scrabble {
 		randomWord = MyString.insertRandomly('a', randomWord);
 		return randomWord;
 	}
+
+	public static boolean subsetOf(String str1, String str2) {     //input, hand
+        int len2 = str2.length();
+        int len1 = str1.length();
+        if(len2 < len1){               //str2 have to be str2 >= str1
+           return false;
+        }
+        if (len1 == 0){                //str1 is empty
+           return true;
+        }
+
+        for(int i = 0; i < len1; i ++){   // on str1
+            char str1Char = str1.charAt(i);
+            int timesIn1 = MyString.countChar(str1, str1Char), timesIn2 = MyString.countChar(str2, str1Char);
+            //System.out.println("letter: " +str1Char+ ". " +str1+ " - " + timesIn1 + ", " +str2+ " - " + timesIn2);
+			if(timesIn1 > timesIn2){
+                return false;
+            }
+        }
+
+        return true;
+    }
 	
     // Runs a single hand in a Scrabble game. Each time the user enters a valid word:
     // 1. The letters in the word are removed from the hand, which becomes smaller.
@@ -147,7 +169,7 @@ public class Scrabble {
 					break;
 				}
 
-				if(MyString.subsetOf(input, hand)){
+				if(subsetOf(input, hand)){
 					isSub = true;
 				} else {
 					System.out.println("Invalid word. Try again.");         //not a sub-word...
@@ -229,6 +251,9 @@ public class Scrabble {
 		// System.out.println("cat (15): " + wordScore("cat"));
 		// System.out.println("quiz (88): " + wordScore("quiz"));
 		//playHand(createHand());
+		//System.out.println("train (25): " + wordScore("train"));
+		//System.out.println(subsetOf("train","aretiin"));
+		playHand("aretiin");
 		
 		////testBuildingTheDictionary();  
 		////testScrabbleScore();  
