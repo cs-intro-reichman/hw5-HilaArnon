@@ -9,7 +9,7 @@ public class MyString {
         System.out.println(countChar(hello, 'l'));  //2
         System.out.println(countChar(hello, 'z'));  //0
     
-        System.out.println(subsetOf("sap","space"));  //true   (false)
+        System.out.println(subsetOf("sap","space"));  //true   
         System.out.println(subsetOf("spa","space"));  // true
         System.out.println(subsetOf("pass","space"));   // false
         System.out.println(subsetOf("c","space"));     // true
@@ -37,7 +37,7 @@ public class MyString {
                 counter ++;
             }
         }
-        return counter;         //its ok if atr is empty that way
+        return counter;         //its ok if str is empty that way
     }
 
     /** Returns true if str1 is a subset string str2, false otherwise
@@ -53,7 +53,7 @@ public class MyString {
      */
 
      // subsetOf function can make use of the countChar function
-    public static boolean subsetOf(String str1, String str2) {     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+     public static boolean subsetOf(String str1, String str2) {     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         //true if str1 is sub of string of str2
         // if(str2 == null){
         //     return false;
@@ -68,26 +68,65 @@ public class MyString {
            return true;
         }
 
-        char firstChar1 = str1.charAt(0);
-        for(int i = 0; i < (len2 - len1 + 1); i ++){
-            boolean isSub = true;
-            if (str2.charAt(i) == firstChar1){
-                int k = i + 1;
-                for(int j = 1; j < len1; j++){
-                    if(str2.charAt(k) != str1.charAt(j)){
-                        isSub = false;
-                        break;
-                    }
-                    k ++;
-                }
-                if (isSub){
-                    return true;
-                }
-            } 
+        for(int i = 0; i < len1; i ++){   // on str1
+            boolean isExist = false;
+            char str1Char = str1.charAt(i);
+            int timesIn1 = countChar(str1, str1Char), timesIn2 = countChar(str2, str1Char);
+            if(timesIn1 != timesIn2){
+                return false;
+            }
+
+            // for(int j = 1; j < len1; j++){              // on str2
+            //     if(str1Char == str2.charAt(j)){
+            //         isExist = true;
+            //         String char1 = "" + str1Char;
+            //         str2 = remove(str2, char1);
+            //         break;
+            //     }
+            // }
+            // if (!isExist){
+            //     return false;
+            // } 
         }
 
-        return false;
+        return true;
     }
+       
+     // public static boolean subsetOf(String str1, String str2) {     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //     //true if str1 is sub of string of str2
+    //     if(str2 == null){
+    //         return false;
+    //     }
+
+    //     int len2 = str2.length();
+    //     int len1 = str1.length();
+    //     if(len2 < len1){               //str2 have to be str2 >= str1
+    //        return false;
+    //     }
+    //     if (len1 == 0){                //str1 is empty
+    //        return true;
+    //     }
+
+    //     char firstChar1 = str1.charAt(0);
+    //     for(int i = 0; i < (len2 - len1 + 1); i ++){
+    //         boolean isSub = true;
+    //         if (str2.charAt(i) == firstChar1){
+    //             int k = i + 1;
+    //             for(int j = 1; j < len1; j++){
+    //                 if(str2.charAt(k) != str1.charAt(j)){
+    //                     isSub = false;
+    //                     break;
+    //                 }
+    //                 k ++;
+    //             }
+    //             if (isSub){
+    //                 return true;
+    //             }
+    //         } 
+    //     }
+
+    //     return false;
+    // }
 
     /** Returns a string which is the same as the given string, with a space
      * character inserted after each character in the given string, except
