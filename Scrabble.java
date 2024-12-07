@@ -132,8 +132,8 @@ public class Scrabble {
 				wantToPlay = false;
 			}
 
-			boolean IsfirstTime = true;
-			while(wantToPlay){                                    //getting a sub-word
+			boolean IsfirstTime = true, isSub = false;
+			while(wantToPlay && !isSub){                               //getting a sub-word
 				if(!IsfirstTime){
 					System.out.println("Current Hand: " + MyString.spacedString(hand));
 					System.out.println("Enter a word, or '.' to finish playing this hand:");
@@ -148,9 +148,10 @@ public class Scrabble {
 				}
 
 				if(MyString.subsetOf(input, hand)){
-					break;
+					isSub = true;
+				} else {
+					System.out.println("Invalid word. Try again.");         //not a sub-word...
 				}
-				System.out.println("Invalid word. Try again.");         //not a sub-word...
 			}
 
 			//cheaking in the DICTIONARY
