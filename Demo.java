@@ -52,7 +52,7 @@ public class Demo {
     	init();
     	// Declares the variable in to refer to an object of type In, and initializes it to represent
 		// the stream of characters coming from the keyboard. Used for reading the user's inputs. 
-		In in = new In();          ///////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
+		In in = new In();          
 
 		// Plays the game
 		while(true) {

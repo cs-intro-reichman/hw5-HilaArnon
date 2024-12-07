@@ -135,6 +135,8 @@ public class Scrabble {
 			boolean IsfirstTime = true;
 			while(wantToPlay){                                    //getting a sub-word
 				if(!IsfirstTime){
+					System.out.println("Current Hand: " + MyString.spacedString(hand));
+					System.out.println("Enter a word, or '.' to finish playing this hand:");
 					input = in.readString();
 				} else {
 					IsfirstTime = false;
@@ -151,8 +153,16 @@ public class Scrabble {
 				System.out.println("Invalid word. Try again.");         //not a sub-word...
 			}
 
-			//cheaking in the Dictionary
-			if(false){                                                       //i didnt change firstTry
+			//cheaking in the DICTIONARY
+			boolean inDICTIONARY = false;
+			for(int i = 0; i < DICTIONARY.length; i ++){
+				if(input.equals(DICTIONARY[i])){
+					inDICTIONARY = true;
+					break;
+				}
+			}
+			
+			if(inDICTIONARY){                                              //not in the DICTIONARY 
 				System.out.println("No such word in the dictionary. Try again.");
 			} else if (wantToPlay){
 				int newScore = wordScore(input);                            //initial score
@@ -178,20 +188,40 @@ public class Scrabble {
 		// The variable in is set to represent the stream of characters 
 		// coming from the keyboard. Used for getting the user's inputs.  
 		In in = new In();
+		boolean inputIsE = false;
 
-		while(true) {
+		while(!inputIsE) {
 			System.out.println("Enter n to deal a new hand, or e to end the game:");
 			// Gets the user's input, which is all the characters entered by 
 			// the user until the user enter the ENTER character.
-			String input = in.readString();
 			//// Replace the following break statement with code
 			//// that completes the game playing loop
-			break;
+			
+			String input = in.readString();
+			boolean firstInput = true, inputIsN = false;
+			while(!inputIsN && !inputIsE){
+				if(!firstInput){
+					input = in.readString();
+				} else {
+					firstInput = false;
+				}
+
+				if(input.equals("e")){
+					inputIsE = true;
+				} else if(input.equals("n")){
+					inputIsN = true;
+				}
+			}
+
+			if(inputIsN){
+				playHand(createHand());
+			}
+
 		}
 	}
 
 	public static void main(String[] args) {
-		System.out.println("A 1 random Strig word: " + createHand());
+		//System.out.println("A 1 random Strig word: " + createHand());
 		// System.out.println("A 2 random Strig word: " + createHand());
 		// System.out.println("A 3 random Strig word: " + createHand());
 		// System.out.println("dog (15): " + wordScore("dog"));
@@ -200,9 +230,8 @@ public class Scrabble {
 		//playHand(createHand());
 		
 		////testBuildingTheDictionary();  
-		////testScrabbleScore();   
-		////testPlayHands();
-		////playGame();
+		////testScrabbleScore();  
+		playGame();
 	}
 
 	public static void testBuildingTheDictionary() {
