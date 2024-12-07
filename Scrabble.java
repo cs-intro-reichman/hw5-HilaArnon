@@ -48,7 +48,11 @@ public class Scrabble {
 
 	// Checks if the given word is in the dictionary.
 	public static boolean isWordInDictionary(String word) {
-		//// Replace the following statement with your code
+		for (int i = 0; i < NUM_OF_WORDS; i++) {
+			if (DICTIONARY[i].equals(word)) {
+				return true;
+			}
+		}
 		return false;
 	}
 	
@@ -134,14 +138,14 @@ public class Scrabble {
     // 2. The user gets the Scrabble points of the entered word.
     // 3. The user is prompted to enter another word, or '.' to end the hand. 
 	public static void playHand(String hand) {
+		init();
 		//int n = hand.length();
 		int score = 0;
-		boolean wantToPlay = true;
 		// Declares the variable in to refer to an object of type In, and initializes it to represent
 		// the stream of characters coming from the keyboard. Used for reading the user's inputs.   
 		In in = new In();
 
-		while (hand.length() > 0 && wantToPlay) {
+		while (hand.length() > 0) {
 			//// Replace the following break statement with code
 			//// that completes the hand playing loop
 			System.out.println("Current Hand: " + MyString.spacedString(hand));
@@ -151,11 +155,12 @@ public class Scrabble {
 			// end-of-line characters.
 			String input = in.readString();
 			if (input.equals(".")){                             ////want to play?
-				wantToPlay = false;
+				return;
 			}
 
 			boolean IsfirstTime = true, isSub = false;
-			while(wantToPlay && !isSub){                               //getting a sub-word
+			System.out.println("before loop, the input: " + input);
+			while(!isSub){                               //getting a sub-word
 				if(!IsfirstTime){
 					System.out.println("Current Hand: " + MyString.spacedString(hand));
 					System.out.println("Enter a word, or '.' to finish playing this hand:");
@@ -165,8 +170,7 @@ public class Scrabble {
 				}
 
 				if (input.equals(".")){                      //want to play?
-					wantToPlay = false;
-					break;
+					return;
 				}
 
 				if(subsetOf(input, hand)){
@@ -177,22 +181,16 @@ public class Scrabble {
 			}
 
 			//cheaking in the DICTIONARY
-			boolean inDICTIONARY = false;
-			for(int i = 0; i < DICTIONARY.length; i ++){
-				if(input.equals(DICTIONARY[i])){
-					inDICTIONARY = true;
-					break;
-				}
-			}
-			
-			if(inDICTIONARY){                                              //not in the DICTIONARY 
+			boolean inDICTIONARY = isWordInDictionary(input);
+			if(!inDICTIONARY){                                              //not in the DICTIONARY 
 				System.out.println("No such word in the dictionary. Try again.");
-			} else if (wantToPlay){
+			} else {
 				int newScore = wordScore(input);                            //initial score
 				
 				score += newScore;                                //end of session with sub-word
 				System.out.println(input + " earned " + newScore + " points. Score: "
 								   + score + " points");
+				System.out.println();
 				hand = MyString.remove(hand, input);
 			}	
 		}
@@ -207,7 +205,6 @@ public class Scrabble {
 	// to end the game. If the user enters any other input, writes an error message.
 	public static void playGame() {
 		// Initializes the dictionary
-    	init();
 		// The variable in is set to represent the stream of characters 
 		// coming from the keyboard. Used for getting the user's inputs.  
 		In in = new In();
@@ -244,6 +241,7 @@ public class Scrabble {
 	}
 
 	public static void main(String[] args) {
+		init();
 		//System.out.println("A 1 random Strig word: " + createHand());
 		// System.out.println("A 2 random Strig word: " + createHand());
 		// System.out.println("A 3 random Strig word: " + createHand());
